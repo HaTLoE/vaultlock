@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VaultLock — AES-256-GCM Browser Encryption</title>
+  <meta name="description" content="Encrypt any file in your browser using AES-256-GCM. No server, no database, no account. Your files never leave your device." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-icon">🔐</div>
+      <span class="nav-wordmark">Vault<span>Lock</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#tool" class="nav-cta">Encrypt a file →</a>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-badge">AES-256-GCM · NIST Certified · Zero Server</div>
+      <h1 class="hero-title">
+        <span class="word-vault">Vault</span><span class="word-lock">Lock</span>
+      </h1>
+      <p class="hero-sub">
+        Military-grade file encryption, right in your browser. No installation, no account, no server. Your files are encrypted before they're touched and they never leave your device.
+      </p>
+      <div class="hero-actions">
+        <a href="#tool" class="btn-primary">⬆ Encrypt a file</a>
+        <a href="#how" class="btn-ghost">Learn how it works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ──────────────────────────────── -->
+  <section class="how" id="how">
+    <div class="container">
+      <p class="section-eyebrow">Process</p>
+      <h2 class="section-title">Three steps.<br>Fully private.</h2>
+      <p class="section-body">Everything happens inside your browser tab. The moment you close the tab, all keys and file data are gone from memory — permanently.</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">Step 01</div>
+          <span class="step-icon">📂</span>
+          <h3 class="step-title">Select your files</h3>
+          <p class="step-desc">Drag and drop one or more files of any type onto the drop zone. Multiple files are bundled into a single archive before encryption — you get one .vault file back.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">Step 02</div>
+          <span class="step-icon">🗝️</span>
+          <h3 class="step-title">Copy your password</h3>
+          <p class="step-desc">A unique 256-bit key is generated in your browser using a cryptographically secure random number generator. Copy it somewhere safe — it is never stored anywhere.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">Step 03</div>
+          <span class="step-icon">⬇</span>
+          <h3 class="step-title">Download your vault</h3>
+          <p class="step-desc">Click Encrypt. Your files are compressed with DEFLATE, encrypted with AES-256-GCM, and packaged into a .vault file — ready to share safely over any channel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECURITY SPECS ─────────────────────────────── -->
+  <section class="specs" id="security">
+    <div class="container">
+      <div class="specs-layout">
+        <div>
+          <p class="section-eyebrow">Cryptography</p>
+          <h2 class="section-title">Built on standards,<br>not promises.</h2>
+          <p class="section-body">Every algorithm and parameter used in VaultLock is specified by NIST. No custom crypto, no proprietary formats — just well-tested, peer-reviewed standards.</p>
+
+          <div class="specs-grid">
+            <div class="spec-card">
+              <div class="spec-label">Cipher</div>
+              <div class="spec-value">AES-256</div>
+              <div class="spec-sub">FIPS 197 — 14 rounds, 256-bit key</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-label">Mode</div>
+              <div class="spec-value">GCM</div>
+              <div class="spec-sub">NIST SP 800-38D authenticated encryption</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-label">Auth Tag</div>
+              <div class="spec-value">128-bit</div>
+              <div class="spec-sub">Detects any ciphertext tampering</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-label">Key Source</div>
+              <div class="spec-value">CSPRNG</div>
+              <div class="spec-sub">OS-seeded, per NIST SP 800-90A</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-label">IV Size</div>
+              <div class="spec-value">96-bit</div>
+              <div class="spec-sub">Random per session, GCM-optimal</div>
+            </div>
+            <div class="spec-card">
+              <div class="spec-label">Compression</div>
+              <div class="spec-value">DEFLATE</div>
+              <div class="spec-sub">Applied before encryption via JSZip</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="arch-diagram">
+            <div class="arch-title">Encryption pipeline</div>
+            <div class="arch-flow">
+              <div class="arch-step">
+                <div class="arch-step-icon">📂</div>
+                <div class="arch-step-text"><strong>Input files</strong> — any type, any count</div>
+              </div>
+              <div class="arch-arrow">↓  JSZip DEFLATE compression</div>
+              <div class="arch-step">
+                <div class="arch-step-icon">📦</div>
+                <div class="arch-step-text"><strong>ZIP archive</strong> — single in-memory ArrayBuffer</div>
+              </div>
+              <div class="arch-arrow">↓  crypto.subtle.encrypt ( AES-256-GCM )</div>
+              <div class="arch-step">
+                <div class="arch-step-icon">🔐</div>
+                <div class="arch-step-text"><strong>Ciphertext + 128-bit GCM tag</strong></div>
+              </div>
+              <div class="arch-arrow">↓  Vault format assembly</div>
+              <div class="arch-step">
+                <div class="arch-step-icon">💾</div>
+                <div class="arch-step-text"><strong>.vault file</strong> — header + IV + ciphertext</div>
+              </div>
+              <div class="arch-arrow">↓  URL.createObjectURL ( no network )</div>
+              <div class="arch-step">
+                <div class="arch-step-icon">⬇</div>
+                <div class="arch-step-text"><strong>Browser download</strong> — straight from RAM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TOOL ──────────────────────────────────────── -->
+  <section class="tool-section" id="tool">
+    <div class="container">
+      <div class="tool-header">
+        <p class="section-eyebrow">The Tool</p>
+        <h2 class="section-title">Encrypt or decrypt your files</h2>
+        <p class="section-body" style="margin: 0 auto; text-align:center;">All processing happens in your browser. No data is ever sent to a server.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tool-tabs">
+        <button class="tool-tab active" data-panel="encrypt-panel">🔒 Encrypt</button>
+        <button class="tool-tab" data-panel="decrypt-panel">🔓 Decrypt</button>
+      </div>
+
+      <!-- ENCRYPT PANEL -->
+      <div class="tool-panel active" id="encrypt-panel">
+        <div class="tool-card">
+
+          <!-- Dropzone -->
+          <div class="dropzone" id="enc-dropzone">
+            <input type="file" id="enc-file-input" multiple style="display:none" />
+            <span class="dropzone-icon">☁</span>
+            <div class="dropzone-title">Drop files here</div>
+            <div class="dropzone-sub">or <span>click to browse</span> — any file type, multiple files OK</div>
+          </div>
+
+          <!-- File list -->
+          <div class="file-list" id="enc-file-list"></div>
+
+          <!-- Password panel -->
+          <div class="password-panel" id="password-panel">
+            <div class="password-warning">
+              <span class="password-warning-icon">⚠️</span>
+              <span class="password-warning-text">
+                <strong>Save this password before encrypting.</strong> It is generated fresh in your browser and never stored anywhere. Without it, your .vault file cannot be decrypted. Send the .vault file and this password through <em>separate</em> channels.
+              </span>
+            </div>
+            <div class="password-field">
+              <div class="password-value" id="password-value"></div>
+              <button class="copy-btn" id="copy-btn">Copy</button>
+            </div>
+          </div>
+
+          <!-- Encrypt button -->
+          <button class="encrypt-btn" id="encrypt-btn" disabled>
+            🔒 Encrypt &amp; Download
+          </button>
+
+          <!-- Status -->
+          <div class="status-panel" id="enc-status"></div>
+        </div>
+      </div>
+
+      <!-- DECRYPT PANEL -->
+      <div class="tool-panel" id="decrypt-panel">
+        <div class="tool-card">
+
+          <!-- Vault file dropzone -->
+          <div class="dropzone" id="dec-dropzone">
+            <input type="file" id="dec-file-input" accept=".vault" style="display:none" />
+            <span class="dropzone-icon">🔐</span>
+            <div class="dropzone-title">Drop your .vault file here</div>
+            <div class="dropzone-sub">or <span>click to browse</span></div>
+          </div>
+          <div id="dec-file-name" style="display:none; font-family:var(--font-mono); font-size:13px; color:var(--accent); margin-top:12px; text-align:center;"></div>
+
+          <!-- Password input -->
+          <div class="decrypt-field-group" style="margin-top:24px;">
+            <label class="field-label" for="dec-password">Decryption password (64-character hex)</label>
+            <input
+              class="field-input"
+              type="text"
+              id="dec-password"
+              placeholder="Paste your 64-character hex password here…"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+
+          <!-- Decrypt button -->
+          <button class="decrypt-btn" id="decrypt-btn" disabled>
+            🔓 Decrypt &amp; Recover Files
+          </button>
+
+          <!-- Status -->
+          <div class="status-panel" id="dec-status"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FAQ ───────────────────────────────────────── -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <p class="section-eyebrow">FAQ</p>
+      <h2 class="section-title">Common questions</h2>
+
+      <div class="faq-grid">
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">Does anything get uploaded to a server?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            No. Encryption and decryption happen entirely inside your browser using the Web Crypto API. The only network request VaultLock ever makes is the initial page load. Your files, keys, and vault outputs never leave your device.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">What is AES-256-GCM?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            AES-256-GCM is the industry standard for authenticated symmetric encryption, standardized by NIST (FIPS 197, SP 800-38D). It provides both confidentiality (no one can read your file without the key) and integrity (any modification to the encrypted file is detected before decryption).
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">What happens if I lose my password?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            The password cannot be recovered — it is never stored anywhere. This is a deliberate security property: there is no server that could be breached to reveal your key. Store your password in a password manager or a secure notes app immediately after copying it.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">Can I encrypt multiple files at once?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes. Select as many files as you like — VaultLock will bundle them all into a single ZIP archive using DEFLATE compression before encrypting. You receive one .vault file regardless of how many files you added. On decryption, all original files are restored individually.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">What is the .vault file format?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            A .vault file contains three sections: an ASCII header identifying the file format and version, a 96-bit random initialization vector (IV) encoded as hex, and the AES-256-GCM ciphertext including its 128-bit authentication tag. The format is self-contained and portable.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-q-text">Does it work offline?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes. Once the page has loaded, VaultLock performs all operations using browser-native APIs and the pre-loaded JSZip library. You can disconnect from the internet and continue encrypting or decrypting files. No additional network requests are made during any operation.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">Vault<span>Lock</span></div>
+        <p class="footer-note">
+          
+        </p>
+        <ul class="footer-links">
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JSZip CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
