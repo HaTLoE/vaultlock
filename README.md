@@ -10,4 +10,4 @@ A browser-based file encryption & decryption app.
 HTML · CSS · JavaScript (Web Crypto API)
 
 ## Live Demo
-[Try it here](https://yourusername.github.io/vaultlock)
+[Try it here](https://github.com/HaTLoE/vaultlock.git)
